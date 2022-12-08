@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="utf8mb4" collation="utf8mb4_general_ci">careem</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="booking" view="colnames">
+<left>520</left>
+<top>204</top>
+<width>126</width>
+<height>163</height>
+<sql_create_table>CREATE TABLE `booking` (
+  `booking_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `booking_Type` enum('Now Booking','Later Booking') DEFAULT NULL,
+  `capt_ID` int(11) DEFAULT NULL,
+  `cust_ID` int(11) DEFAULT NULL,
+  `ride_ID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`booking_ID`),
+  KEY `capt_ID` (`capt_ID`),
+  KEY `cust_ID` (`cust_ID`),
+  KEY `ride_ID` (`ride_ID`),
+  CONSTRAINT `booking_ibfk_1` FOREIGN KEY (`capt_ID`) REFERENCES `captain` (`capt_ID`),
+  CONSTRAINT `booking_ibfk_2` FOREIGN KEY (`cust_ID`) REFERENCES `customer` (`cust_ID`),
+  CONSTRAINT `booking_ibfk_3` FOREIGN KEY (`ride_ID`) REFERENCES `rides` (`ride_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4</sql_create_table>
+</table>
+<table name="captain" view="colnames">
+<left>61</left>
+<top>298</top>
+<width>136</width>
+<height>163</height>
+<sql_create_table>CREATE TABLE `captain` (
+  `capt_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `capt_Name` varchar(50) DEFAULT NULL,
+  `capt_ContactNo` varchar(50) DEFAULT NULL,
+  `capt_lisenceNo` varchar(50) DEFAULT NULL,
+  `cust_ID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`capt_ID`),
+  KEY `cust_ID` (`cust_ID`),
+  CONSTRAINT `captain_ibfk_1` FOREIGN KEY (`cust_ID`) REFERENCES `customer` (`cust_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4</sql_create_table>
+</table>
+<table name="customer" view="colnames">
+<left>75</left>
+<top>20</top>
+<width>135</width>
+<height>146</height>
+<sql_create_table>CREATE TABLE `customer` (
+  `cust_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `cust_Name` varchar(50) DEFAULT NULL,
+  `cust_ContactNo` varchar(50) DEFAULT NULL,
+  `Location` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`cust_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4</sql_create_table>
+</table>
+<table name="payment" view="colnames">
+<left>1047</left>
+<top>210</top>
+<width>131</width>
+<height>146</height>
+<sql_create_table>CREATE TABLE `payment` (
+  `payment_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `payment_Type` enum('Card','Cash') DEFAULT NULL,
+  `payment_Time` varchar(50) DEFAULT NULL,
+  `trip_ID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`payment_ID`),
+  KEY `trip_ID` (`trip_ID`),
+  CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`trip_ID`) REFERENCES `trip` (`trip_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4</sql_create_table>
+</table>
+<table name="rides" view="colnames">
+<left>343</left>
+<top>23</top>
+<width>90</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `rides` (
+  `ride_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ride_No` varchar(50) DEFAULT NULL,
+  `cust_ID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ride_ID`),
+  KEY `cust_ID` (`cust_ID`),
+  CONSTRAINT `rides_ibfk_1` FOREIGN KEY (`cust_ID`) REFERENCES `customer` (`cust_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4</sql_create_table>
+</table>
+<table name="trip" view="colnames">
+<left>754</left>
+<top>12</top>
+<width>137</width>
+<height>163</height>
+<sql_create_table>CREATE TABLE `trip` (
+  `trip_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `fare_Detail` varchar(50) DEFAULT NULL,
+  `estimated_Time` varchar(50) DEFAULT NULL,
+  `destination` varchar(50) DEFAULT NULL,
+  `booking_ID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`trip_ID`),
+  KEY `booking_ID` (`booking_ID`),
+  CONSTRAINT `trip_ibfk_1` FOREIGN KEY (`booking_ID`) REFERENCES `booking` (`booking_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4</sql_create_table>
+</table>
+<table name="vehicles" view="colnames">
+<left>757</left>
+<top>373</top>
+<width>126</width>
+<height>146</height>
+<sql_create_table>CREATE TABLE `vehicles` (
+  `vehicle_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `vehicle_Model` varchar(50) DEFAULT NULL,
+  `vehicle_Type` enum('Go Mini','Go+','Business Class','Rikshaw','Bike') DEFAULT NULL,
+  `booking_ID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`vehicle_ID`),
+  KEY `booking_ID` (`booking_ID`),
+  CONSTRAINT `vehicles_ibfk_1` FOREIGN KEY (`booking_ID`) REFERENCES `booking` (`booking_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>
